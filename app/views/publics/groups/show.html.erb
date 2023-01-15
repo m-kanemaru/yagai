@@ -1,0 +1,43 @@
+<div class='container px-5 px-sm-0'>
+    <div class='row mt-5'>
+        <div class='col-md-5'>
+            <table class='table'>
+                <tr>
+                    <th>
+                        <h2><%= @group.title %></h2>
+                        <%= image_tag @group.get_image_id,  class:"card-img-top" %>
+                        <th></th>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        紹介文<br>
+                        <%= @group.introduction %></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <% if @group.owner_id == current_user.id %>
+                        <th>
+                            <%= link_to edit_group_path(@group) do %>
+                            <i class="fas fa-cogs"></i>
+                            <% end %>
+                        </th>
+                        <th>
+                            <%= link_to group_all_destroy_path(@group), method: :delete, data: { confirm: '本当に消しますか？' } do %>
+                                <i class="fas fa-trash-alt"></i>
+                            <% end %>
+                        </th>
+                    <% elsif @group.users.include?(current_user) %>
+                        <th><%= link_to 'フォロー中', group_path(@group), method: :delete %></th>
+                    <% else %>
+                        <th><%= link_to 'フォロー', group_join_path(@group) %></th>
+                    <% end %>
+                </tr>
+            </table>
+        </div>
+        <div class='col-md-7'>
+            <%= render 'publics/users/index' ,users: @users %>
+        </div>
+    </div>
+</div>
+

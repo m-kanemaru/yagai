@@ -1,0 +1,31 @@
+<div class="card-list-container">
+  <div class="row">
+    <% @groups.each do |group| %>
+    <div class="col-6">
+        <div class="card w-60 mx-auto mt-4 shadow-lg">
+          <%= link_to group do %>
+            <%= image_tag group.get_image_id, class:"card-img-top" %>
+          <% end %>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-8">
+                <h3><%= link_to group.title, group_path(group) %></h3>
+              </div>
+              <div class="col-4">
+                <i class="fas fa-users"></i><%= group.user_groups.count(:user_id) %>
+              </div>
+              <div class="col-12">
+                <div class="card-text">
+                  <p>
+                    <%= group.introduction %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= paginate groups %>
