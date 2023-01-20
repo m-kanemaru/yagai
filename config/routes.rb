@@ -19,6 +19,23 @@ scope module: :publics do
     resources :chats, only: [:create]
     
   end
-  devise_for :users
+
+  devise_for :admins, only: [:sessions, :password], :controllers => {
+    :sessions => 'admins/sessions'
+  }
+  
+  namespace :admins do
+    
+    resources :users, only: [:index,:show,:edit,:update]
+    
+    
+    resources :groups, only: [:index,:show,:edit,:destroy,:update]
+    
+    resources :groups, only: [:new, :index,:show,:edit,:create,:destroy,:update] do
+      delete "all_destroy" => 'groups#all_destroy'
+    end
+  
+  end
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
